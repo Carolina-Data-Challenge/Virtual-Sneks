@@ -1,0 +1,309 @@
+---
+title: "Ellie's output"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+library(ggplot2)
+library(dplyr)
+
+NCairquality = read.csv("NCairquality.csv")
+NCairquality$location = as.character(NCairquality$location)
+```
+
+```{r}
+NCairquality %>% 
+  group_by(majorlocation) %>%
+  summarise(count = n(),
+            pm10_avg = mean(pm10, na.rm = TRUE),
+            pm25_avg = mean(pm25, na.rm = TRUE),
+            so2_avg = mean(so2, na.rm = TRUE), 
+            o3_avg = mean(o3, na.rm = TRUE),
+            co_avg = mean(co, na.rm = TRUE),
+            no2_avg = mean(no2, na.rm = TRUE))
+
+```
+
+# pm10 by major location
+
+```{r}
+pm10notNA <- filter(NCairquality, !is.na(pm10))
+
+#anova
+aov(pm10 ~ majorlocation, data=pm10notNA) %>% summary()
+
+#differences
+aov(pm10 ~ majorlocation, data=pm10notNA) %>% TukeyHSD()
+
+#ggplot
+library(ggplot2)
+ggplot(NCairquality, aes(as.factor(majorlocation), pm10)) + 
+  geom_boxplot(aes_string(colour="majorlocation", fill="majorlocation")) + 
+  theme_classic() +
+  xlab("Major Location")+
+  stat_summary(geom = "crossbar", width=0.65, fatten=0, color="white", fun.data = function(x){ return(c(y=median(x), ymin=median(x), ymax=median(x))) }) + 
+  scale_fill_brewer(palette = "Set2") +
+  scale_color_brewer(palette = "Set2") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+library(ggplot2)
+ggplot(NCairquality, aes(as.factor(majorlocation), pm10)) + 
+  geom_boxplot(aes_string(colour="majorlocation", fill="majorlocation")) + 
+  theme_classic() +
+  xlab("Major Location")+
+  stat_summary(geom = "crossbar", width=0.65, fatten=0, color="white", fun.data = function(x){ return(c(y=median(x), ymin=median(x), ymax=median(x))) }) + 
+  scale_fill_brewer(palette = "Set2") +
+  scale_color_brewer(palette = "Set2") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  coord_cartesian(ylim = c(0,30))
+```
+
+# pm10 by location
+```{r}
+pm10notNA <- filter(NCairquality, !is.na(pm10))
+
+#anova
+aov(pm10 ~ location, data=pm10notNA) %>% summary()
+
+#differences
+aov(pm10 ~ location, data=pm10notNA) %>% TukeyHSD()
+
+#ggplot
+library(ggplot2)
+ggplot(NCairquality, aes(as.factor(location), pm10)) + 
+  geom_boxplot(aes_string(colour="location", fill="location")) + 
+  theme_classic() +
+  xlab("Location")+
+  stat_summary(geom = "crossbar", width=0.65, fatten=0, color="white", fun.data = function(x){ return(c(y=median(x), ymin=median(x), ymax=median(x))) }) + 
+  scale_fill_brewer(palette = "Set2") +
+  scale_color_brewer(palette = "Set2") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+ggplot(NCairquality, aes(as.factor(location), pm10)) + 
+  geom_boxplot(aes_string(colour="location", fill="location")) + 
+  theme_classic() +
+  xlab("Location")+
+  stat_summary(geom = "crossbar", width=0.65, fatten=0, color="white", fun.data = function(x){ return(c(y=median(x), ymin=median(x), ymax=median(x))) }) + 
+  scale_fill_brewer(palette = "Set2") +
+  scale_color_brewer(palette = "Set2") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))+
+  coord_cartesian(ylim = c(0,30))
+```
+
+# pm25 by major location
+
+```{r}
+pm25notNA <- filter(NCairquality, !is.na(pm25))
+
+#anova
+aov(pm25 ~ majorlocation, data=pm25notNA) %>% summary()
+
+#differences
+aov(pm25 ~ majorlocation, data=pm25notNA) %>% TukeyHSD()
+
+#ggplot
+library(ggplot2)
+ggplot(NCairquality, aes(as.factor(majorlocation), pm25)) + 
+  geom_boxplot(aes_string(colour="majorlocation", fill="majorlocation")) + 
+  theme_classic() +
+  xlab("Major Location")+
+  stat_summary(geom = "crossbar", width=0.65, fatten=0, color="white", 
+               fun.data = function(x){ return(c(y=median(x), ymin=median(x), ymax=median(x))) }) + 
+  scale_fill_brewer(palette = "Set2") +
+  scale_color_brewer(palette = "Set2") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+library(ggplot2)
+ggplot(NCairquality, aes(as.factor(majorlocation), pm25)) + 
+  geom_boxplot(aes_string(colour="majorlocation", fill="majorlocation")) + 
+  theme_classic() +
+  xlab("Major Location")+
+  stat_summary(geom = "crossbar", width=0.65, fatten=0, color="white", 
+               fun.data = function(x){ return(c(y=median(x), ymin=median(x), ymax=median(x))) }) + 
+  scale_fill_brewer(palette = "Set2") +
+  scale_color_brewer(palette = "Set2") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  coord_cartesian(ylim=c(0,20))
+```
+
+
+# pm 25 by location 
+```{r}
+pm25notNA <- filter(NCairquality, !is.na(pm25))
+
+#anova
+aov(pm25 ~ location, data=pm25notNA) %>% summary()
+
+#differences
+aov(pm25 ~ location, data=pm25notNA) %>% TukeyHSD()
+
+#ggplot
+library(ggplot2)
+ggplot(NCairquality, aes(as.factor(location), pm25)) + 
+  geom_boxplot(aes_string(colour="location", fill="location")) + 
+  theme_classic() +
+  xlab("Location")+
+  stat_summary(geom = "crossbar", width=0.65, fatten=0, color="white", 
+               fun.data = function(x){ return(c(y=median(x), ymin=median(x), ymax=median(x))) }) + 
+  scale_fill_brewer(palette = "Set2") +
+  scale_color_brewer(palette = "Set2") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+ggplot(NCairquality, aes(as.factor(location), pm25)) + 
+  geom_boxplot(aes_string(colour="location", fill="location")) + 
+  theme_classic() +
+  xlab("Location")+
+  stat_summary(geom = "crossbar", width=0.65, fatten=0, color="white", 
+               fun.data = function(x){ return(c(y=median(x), ymin=median(x), ymax=median(x))) }) + 
+  scale_fill_brewer(palette = "Set2") +
+  scale_color_brewer(palette = "Set2") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  coord_cartesian(ylim=c(0,20))
+```
+
+
+
+
+
+# o3 by major location
+```{r}
+o3notNA <- filter(NCairquality, !is.na(o3))
+
+#anova
+aov(o3 ~ majorlocation, data=o3notNA) %>% summary()
+
+#differences
+aov(o3 ~ majorlocation, data=o3notNA) %>% TukeyHSD()
+
+#ggplot
+library(ggplot2)
+ggplot(NCairquality, aes(as.factor(majorlocation), o3)) + 
+  geom_boxplot(aes_string(colour="majorlocation", fill="majorlocation")) + 
+  theme_classic() +
+  xlab("Major Location")+
+  stat_summary(geom = "crossbar", width=0.65, fatten=0, color="white", 
+               fun.data = function(x){ return(c(y=median(x), ymin=median(x), ymax=median(x))) }) + 
+  scale_fill_brewer(palette = "Set2") +
+  scale_color_brewer(palette = "Set2") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+# o3 by location 
+```{r}
+o3notNA <- filter(NCairquality, !is.na(o3))
+
+#anova
+aov(o3 ~ location, data=o3notNA) %>% summary()
+
+#differences
+aov(o3 ~ location, data=o3notNA) %>% TukeyHSD()
+
+#ggplot
+library(ggplot2)
+ggplot(NCairquality, aes(as.factor(location), o3)) + 
+  geom_boxplot(aes_string(colour="location", fill="location")) + 
+  theme_classic() +
+  xlab("Location")+
+  stat_summary(geom = "crossbar", width=0.65, fatten=0, color="white", 
+               fun.data = function(x){ return(c(y=median(x), ymin=median(x), ymax=median(x))) }) + 
+  scale_fill_brewer(palette = "Set2") +
+  scale_color_brewer(palette = "Set2") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+```
+
+# pm 10 over time
+
+```{r}
+NCairquality %>%
+  mutate(month = lubridate::month(local)) %>%
+  filter(!is.na(pm10)) %>%
+  group_by(month) %>%
+  summarise(avg_pm10 = mean(pm10)) %>%
+  ggplot(aes(month, avg_pm10)) + geom_line()
+
+NCairquality %>%
+  mutate(month = lubridate::month(local)) %>%
+  filter(!is.na(pm10)) %>%
+  group_by(month, majorlocation) %>%
+  summarise(avg_pm10 = mean(pm10)) %>%
+  ggplot(aes(month, avg_pm10, color = majorlocation)) +
+  geom_line() +
+  theme_minimal() +
+  scale_x_continuous(breaks = scales::pretty_breaks())
+```
+
+
+# pm 25 over time
+
+```{r}
+NCairquality %>%
+  mutate(month = lubridate::month(local)) %>%
+  filter(!is.na(pm25)) %>%
+  group_by(month) %>%
+  summarise(avg_pm25 = mean(pm25)) %>%
+  ggplot(aes(month, avg_pm25)) + geom_line() +
+  scale_x_continuous(breaks = scales::pretty_breaks())
+
+NCairquality %>%
+  mutate(month = lubridate::month(local)) %>%
+  filter(!is.na(pm25)) %>%
+  group_by(month, majorlocation) %>%
+  summarise(avg_pm25 = mean(pm25)) %>%
+  ggplot(aes(month, avg_pm25, color = majorlocation)) +
+  geom_line() +
+  theme_minimal() +
+  scale_x_continuous(breaks = scales::pretty_breaks())
+```
+
+
+# o3 over time
+
+```{r}
+NCairquality %>%
+  mutate(month = lubridate::month(local)) %>%
+  filter(!is.na(o3)) %>%
+  group_by(month) %>%
+  summarise(avg_o3 = mean(o3)) %>%
+  ggplot(aes(month, avg_o3)) + geom_line() +
+  scale_x_continuous(breaks = scales::pretty_breaks())
+
+NCairquality %>%
+  mutate(month = lubridate::month(local)) %>%
+  filter(!is.na(o3)) %>%
+  group_by(month, majorlocation) %>%
+  summarise(avg_o3 = mean(o3)) %>%
+  ggplot(aes(month, avg_o3, color = majorlocation)) +
+  geom_line() +
+  theme_minimal() +
+  scale_x_continuous(breaks = scales::pretty_breaks())
+```
+
+
+```{r}
+NCairquality %>%
+  mutate(month_yr = format(as.Date(local), "%Y-%m")) %>%
+  filter(!is.na(o3)) %>%
+  group_by(month_yr) %>%
+  summarise(avg_o3 = mean(o3)) %>%
+  ggplot(aes(month_yr, avg_o3)) + 
+    geom_point() +
+    geom_path() +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+
+
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
