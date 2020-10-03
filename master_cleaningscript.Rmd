@@ -99,6 +99,8 @@ wilmington <- read_csv("openaq.csv") %>%
 NCairquality <- rbind(durham, bryson, greensboro, charlotte, cranberry, moreheadcity, raleigh, wilmington)
 nrow(NCairquality)
 str(NCairquality)
+
+write.csv(NCairquality, "NCairquality.csv")
 ```
 ```{r}
 NCairquality %>% 
