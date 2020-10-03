@@ -93,12 +93,10 @@ moreheadcity <- read_csv("moreheadcity_allvars.csv") %>%
 raleigh <- read_csv("raleigh.csv") %>% 
   cleaning.function(x="Raleigh")
 
-wilmington <- read_csv("openaq.csv") %>% 
-  cleaning.function(x="Wilmington")
 ```
 
 ```{r}
-NCairquality <- rbind(durham, bryson, greensboro, charlotte, cranberry, moreheadcity, raleigh, wilmington)
+NCairquality <- rbind(durham, bryson, greensboro, charlotte, cranberry, moreheadcity, raleigh)
 nrow(NCairquality)
 str(NCairquality)
 
