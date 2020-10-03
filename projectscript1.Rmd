@@ -175,9 +175,32 @@ head(wilmington)
 ```
 
 ```{r}
-test1 <- head(greensboro_o3)
-test2 <- head(greensboro_pm)
+greensboro <- full_join(greensboro_o3, greensboro_pm, by= c("location", "local"), all = TRUE) %>%
+  subset(select = -c(pm10.x, pm25.x, so2.y, o3.y, co.y, no2.y, latitude.y, longitude.y, majorlocation.y)) %>%
+  setNames(c("location","local","so2", "o3", "co", "no2", "latitude", "longitude", "majorlocation", "pm10", "pm25"))
 
-full_join(greensboro_o3, greensboro_pm, by= c("location", "local"), all = TRUE)
+greensboro <- greensboro[c("location","local", "pm10", "pm25", "so2", "o3", "co", "no2", "latitude", "longitude", "majorlocation")]
+
+greensboro$majorlocation <- "greensboro"
+
+greensboro %>% head
 ```
+```{r}
+NCairquality <- rbind(Durham, bryson, greensboro, charlotte, cranberry, moreheadcity, raleigh, wilmington)
+nrow(NCairquality)
+str(NCairquality)
+```
+
+```{r}
+NCairquality %>% 
+  group_by(majorlocation) %>%
+  summarise(count = n(),
+            pm10_avg = mean(pm10, na.rm = TRUE),
+            pm25_avg = mean(pm25, na.rm = TRUE),
+            so2_avg = mean(so2, na.rm = TRUE), 
+            o3_avg = mean(o3, na.rm = TRUE),
+            co_avg = mean(co, na.rm = TRUE),
+            no2_avg = mean(no2, na.rm = TRUE))
+```
+
 
