@@ -72,9 +72,9 @@ cranberry <- read.csv("cranberry_allvars.csv") %>%
 
 greensboro_o3 <- read_csv("greensboro_o3.csv") %>% 
   cleaning.function(x ="Greensboro")
-
 greensboro_pm <- read_csv("greensboro_pm.csv") %>% 
   cleaning.function(x = "Greensboro")
+greensboro = full_join(greensboro_o3, greensboro_pm, by= c("location", "local"), all = TRUE)
 
 moreheadcity <- read_csv("moreheadcity_allvars.csv") %>% 
   cleaning.function( x = "Morehead City")
@@ -87,10 +87,7 @@ wilmington <- read_csv("openaq.csv") %>%
 ```
 
 ```{r}
-test1 <- head(greensboro_o3)
-test2 <- head(greensboro_pm)
 
-full_join(greensboro_o3, greensboro_pm, by= c("location", "local"), all = TRUE)
 ```
 
 When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
