@@ -74,7 +74,7 @@ greensboro_o3 <- read_csv("greensboro_o3.csv") %>%
   cleaning.function(x ="Greensboro")
 greensboro_pm <- read_csv("greensboro_pm.csv") %>% 
   cleaning.function(x = "Greensboro")
-greensboro = full_join(greensboro_o3, greensboro_pm, by= c("location", "local"), all = TRUE)
+greensboro = full_join(greensboro_o3, greensboro_pm, by= c("location", "local"), all = TRUE) 
 
 moreheadcity <- read_csv("moreheadcity_allvars.csv") %>% 
   cleaning.function( x = "Morehead City")
@@ -84,6 +84,24 @@ raleigh <- read_csv("raleigh.csv") %>%
 
 wilmington <- read_csv("openaq.csv") %>% 
   cleaning.function(x="Wilmington")
+```
+
+```{r}
+greensboro <- full_join(greensboro_o3, greensboro_pm, by= c("location", "local"), all = TRUE) %>%
+  subset(select = -c(pm10.x, pm25.x, so2.y, o3.y, co.y, no2.y, latitude.y, longitude.y, majorlocation.y)) %>%
+  setNames(c("location","local","so2", "o3", "co", "no2", "latitude", "longitude", "majorlocation", "pm10", "pm25"))
+
+greensboro <- greensboro[c("location","local", "pm10", "pm25", "so2", "o3", "co", "no2", "latitude", "longitude", "majorlocation")]
+
+greensboro$majorlocation <- "greensboro"
+
+greensboro %>% head
+```
+```{r}
+NCairquality <- rbind(Durham, bryson, greensboro, charlotte, cranberry, moreheadcity, raleigh, wilmington)
+nrow(NCairquality)
+str(NCairquality)
+```
 ```
 
 

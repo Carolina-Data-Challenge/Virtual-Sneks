@@ -9,6 +9,7 @@ library(tidyverse)
 ```{r}
 library(readr)
 OpenAQDurham <- read_csv("C:/Users/gabri/OneDrive/Documents/CDC2020/OpenAQDurham.csv")
+
 head(OpenAQDurham)
 ```
 ```{r}
