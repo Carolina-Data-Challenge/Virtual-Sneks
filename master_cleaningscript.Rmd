@@ -10,6 +10,7 @@ Try executing this chunk by clicking the *Run* button within the chunk or by pla
 ```{r}
 library(dplyr)
 library(readr)
+library(ggplot2)
 ```
 
 Function to clean AQ Data
@@ -61,6 +62,7 @@ return(df_final)
 durham = read.csv("OpenAQDurham.csv") %>%
   cleaning.function(x = "Durham") 
 durham$local = as.POSIXct(durham$local, format="%Y-%m-%dT%H:%M")
+durham$location = as.character(durham$location)
 
 bryson <- read_csv("bryson_allvars.csv") %>%
   cleaning.function(x="Bryson")
@@ -103,7 +105,7 @@ str(NCairquality)
 write.csv(NCairquality, "NCairquality.csv")
 ```
 ```{r}
-NCairquality %>% 
+measurement_by_city = NCairquality %>% 
   group_by(majorlocation) %>%
   summarise(count = n(),
             pm10_avg = mean(pm10, na.rm = TRUE),
@@ -112,4 +114,6 @@ NCairquality %>%
             o3_avg = mean(o3, na.rm = TRUE),
             co_avg = mean(co, na.rm = TRUE),
             no2_avg = mean(no2, na.rm = TRUE))
+
+write.csv(measurement_by_city, "Meas_by_city.csv")
 ```
