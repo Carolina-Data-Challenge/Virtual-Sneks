@@ -1,0 +1,95 @@
+---
+title: "Cleaning Script1"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+library(dplyr)
+library(readr)
+```
+
+Function to clean AQ Data
+```{r}
+cleaning.function <- function(df, x) {
+  
+test1 <- df %>% group_by(location, local) %>%
+  filter(parameter=="pm10") %>%
+  summarise(pm10 = value)
+
+test2 <- df %>% group_by(location, local) %>%
+  filter(parameter=="pm25") %>%
+  summarise(pm25 = value)
+
+test3 <- df %>% group_by(location, local) %>%
+  filter(parameter=="so2") %>%
+  summarise(so2 = value)
+
+test4 <- df %>% group_by(location, local) %>%
+  filter(parameter=="o3") %>%
+  summarise(o3 = value)
+
+test5 <- df %>% group_by(location, local) %>%
+  filter(parameter=="co") %>%
+  summarise(co = value)
+
+test6 <- df %>% group_by(location, local) %>%
+  filter(parameter=="no2") %>%
+  summarise(no2 = value)
+
+test7 <- df %>% group_by(location,local) %>% 
+  summarise(latitude = mean(latitude), longitude = mean(longitude))
+
+df_final <- merge(test1, test2, by = c("location", "local"), all = TRUE) %>%
+  merge(test3, by = c("location", "local"), all = TRUE) %>%
+  merge(test4, by = c("location", "local"), all = TRUE) %>%
+  merge(test5, by = c("location", "local"), all = TRUE) %>%
+  merge(test6, by = c("location", "local"), all = TRUE) %>%
+  merge(test7, by = c("location", "local"), all = TRUE)
+
+df_final$majorlocation <- x
+
+return(df_final)
+}
+```
+
+
+```{r}
+durham = read.csv("OpenAQDurham.csv") %>%
+  cleaning.function(x = "Durham")
+
+bryson <- read_csv("bryson_allvars.csv") %>%
+  cleaning.function(x="Bryson")
+
+charlotte <- read_csv("charlotte_allvars.csv") %>%
+  cleaning.function(x ="Charlotte")
+
+cranberry <- read.csv("cranberry_allvars.csv") %>%
+  cleaning.function(x ="Cranberry")
+
+greensboro_o3 <- read_csv("greensboro_o3.csv") %>% 
+  cleaning.function(x ="Greensboro")
+greensboro_pm <- read_csv("greensboro_pm.csv") %>% 
+  cleaning.function(x = "Greensboro")
+greensboro = full_join(greensboro_o3, greensboro_pm, by= c("location", "local"), all = TRUE)
+
+moreheadcity <- read_csv("moreheadcity_allvars.csv") %>% 
+  cleaning.function( x = "Morehead City")
+
+raleigh <- read_csv("raleigh.csv") %>% 
+  cleaning.function(x="Raleigh")
+
+wilmington <- read_csv("openaq.csv") %>% 
+  cleaning.function(x="Wilmington")
+```
+
+```{r}
+
+```
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.

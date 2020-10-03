@@ -2,6 +2,7 @@ library(dplyr)
 
 durh_clean = read.csv("OpenAQDurham.csv") %>%
   cleaning.function(AQDurham)
+durh_clean$majorlocation = "durham"
   
 durh_clean$local = as.POSIXct(durh_clean$local, format="%Y-%m-%dT%H:%M")
 
