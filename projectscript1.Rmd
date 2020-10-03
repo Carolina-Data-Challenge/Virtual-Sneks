@@ -186,8 +186,9 @@ greensboro$majorlocation <- "greensboro"
 
 greensboro %>% head
 ```
+
 ```{r}
-NCairquality <- rbind(Durham, bryson, greensboro, charlotte, cranberry, moreheadcity, raleigh, wilmington)
+NCairquality <- rbind(durham, bryson, greensboro, charlotte, cranberry, moreheadcity, raleigh, wilmington)
 nrow(NCairquality)
 str(NCairquality)
 ```
