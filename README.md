@@ -1,3 +1,14 @@
+# Work flow 
+The data needed is all included in this repo
+
+The main scripts needed to run the code are (in order)
+- master_cleaningscript.Rmd
+- ncairquality_analysis.Rmd
+
+all others include fragment or draft code
+
+Thank you for your consideration!
+
 # 2020 CDC Project Submission Template
 
 This repository is a private space for you and your team to collaborate with one another. The datasets for each track are available in [this repository](https://github.com/Carolina-Data-Challenge/datasets) for ease of access. While we can only encourage you to work out of this repository throughout the event, do note that **you will be required to submit your project files in this repository for judging**.
