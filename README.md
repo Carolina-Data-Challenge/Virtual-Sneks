@@ -10,7 +10,7 @@ Specifically, to submit your project you will be required to complete the follow
 ---
 
 **PASTE PUBLIC VIDEO LINK HERE: ___________________________**
-**PROJECT WEBSITE lINK: https://gabrieller1998.wixsite.com/cdc2020website**
+**PROJECT WEBSITE LINK: https://gabrieller1998.wixsite.com/cdc2020website**
 
 ---
 
