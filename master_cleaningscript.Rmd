@@ -13,7 +13,9 @@ library(readr)
 library(ggplot2)
 ```
 
-Function to clean AQ Data
+Function to clean generic AQ Data set. 
+This function alters the structure of the data so that each row is a specific time at a specific location and all data is contained in that row.
+It also adds a major location value based on the city or town nearest the collection location.
 ```{r}
 cleaning.function <- function(df, x) {
   
@@ -57,7 +59,7 @@ return(df_final)
 }
 ```
 
-
+Each data set was run through the cleaning function except for the Durham data set which was downloaded directely from the CDC datasets repo. FOr locations where there was too much data to download in one table, multiple tables were joined based on location and local time.
 ```{r}
 durham = read.csv("OpenAQDurham.csv") %>%
   cleaning.function(x = "Durham") 
@@ -95,6 +97,7 @@ raleigh <- read_csv("raleigh.csv") %>%
 
 ```
 
+Once each table was cleaned they were combined to create a master data set.
 ```{r}
 NCairquality <- rbind(durham, bryson, greensboro, charlotte, cranberry, moreheadcity, raleigh)
 nrow(NCairquality)

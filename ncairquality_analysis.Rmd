@@ -7,8 +7,12 @@ output: html_document
 
 ```{r}
 library(readr)
-NCairquality <- read_csv("~/Virtual Sneks 2/NCairquality.csv")
-NCairquality <- filter(NCairquality, majorlocation != "Wilmington")
+library(dplyr)
+library(ggplot2)
+
+NCairquality <- read_csv("NCairquality.csv")
+NCairquality$location = as.character(NCairquality$location)
+
 head(NCairquality)
 nrow(NCairquality)
 ```
